@@ -1,0 +1,128 @@
+﻿@model MusicLib.Models.IndexViewModel 
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>List of Songs</h2>
+
+<p>
+    <a asp-action="Create">Add a new Song</a>    
+</p>
+<form method="get">
+    <div>
+        <label>Artist: </label>
+        <select name="artist" asp-items="Model.FilterViewModel.Artists"></select>
+
+        <label>Genre: </label>
+        <select name="genre" asp-items="Model.FilterViewModel.Genres"></select>
+
+        <input type="submit" value="Filter" />
+    </div>
+</form>
+
+<table class="table-condensed" style="width:100%">
+    <tr>
+        <th>
+            <a asp-action="Index" 
+            asp-route-sortOrder="@(Model.SortViewModel.SongTitleSort)"
+            asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
+            asp-route-artist="@(Model.FilterViewModel.SelectedArtist)">Song</a>
+        </th>
+        <th>                
+            <a asp-action="Index" 
+            asp-route-sortOrder="@(Model.SortViewModel.SongReleaseDateSort)"
+            asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
+            asp-route-artist="@(Model.FilterViewModel.SelectedArtist)">Release Date</a>
+        </th>
+        <th>
+            <a asp-action="Index" 
+            asp-route-sortOrder="@(Model.SortViewModel.GenreTitleSort)"
+            asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
+            asp-route-artist="@(Model.FilterViewModel.SelectedArtist)">Genre</a>
+        </th>
+        <th>
+            <a asp-action="Index" 
+            asp-route-sortOrder="@(Model.SortViewModel.ArtistNameSort)"
+            asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
+            asp-route-artist="@(Model.FilterViewModel.SelectedArtist)">Artist</a>
+        </th>
+        <th>Youtube</th>
+    </tr>
+
+@if (Model.Songs != null)
+{    
+    @foreach (var item in Model.Songs)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Release)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Genre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Artist)
+        </td>
+            <td>
+                <button type="button" class="btn btn-outline-success"
+                        onclick="window.location.href='@item.YoutubeLink)'">
+                    Play</button>
+            
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Video)
+        </td>
+
+        <td>
+                <a type="button" class="btn btn-outline-primary" asp-action="Watch" asp-controller="Videos" asp-route-id="@item.VideoId">MP4</a>  
+
+            
+                <a type="button" class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Detailes</a>
+
+                @if (Context.Session.GetInt32("Role") == 1)
+                {
+                    <a> </a>
+                    <a type="button" class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a> </a>
+                    <a type="button" class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
+        </td>
+    </tr>
+    }
+}
+else
+{
+    <tr>No songs available.</tr>
+}
+
+</table>
+<p>
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a asp-action="Index"
+           asp-route-page="@(Model.PageViewModel.PageNumber - 1)"           
+           asp-route-artist="@(Model.FilterViewModel.SelectedArtist)"
+           asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
+           asp-route-sortorder="@(Model.SortViewModel.Current)"
+           class="glyphicon glyphicon-chevron-left">
+            Reward
+        </a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a asp-action="Index"
+           asp-route-page="@(Model.PageViewModel.PageNumber + 1)"           
+           asp-route-artist="@(Model.FilterViewModel.SelectedArtist)"
+           asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
+           asp-route-sortorder="@(Model.SortViewModel.Current)"
+           class="glyphicon glyphicon-chevron-right">
+            Forward
+        </a>
+    }
+</p>
