@@ -8,6 +8,7 @@
         public SortState SongTitleSort { get;  set; }    // значение для сортировки по названию песни         
         public SortState SongReleaseDateSort { get;  set; }    // значение для сортировки по дате релиза песни 
         public SortState Current { get; set; }     // значение свойства, выбранного для сортировки
+        public bool Up { get; set; }  // Сортировка по возрастанию или убыванию
         public SortViewModel(SortState sortOrder)
         {
             // значения по умолчанию
@@ -24,7 +25,6 @@
             SongReleaseDateSort = sortOrder == SortState.SongReleaseDateAsc ? SortState.SongReleaseDateDesc : SortState.SongReleaseDateAsc;
 
             Current = sortOrder;
-            Console.WriteLine(Current);
         }
     }
 }

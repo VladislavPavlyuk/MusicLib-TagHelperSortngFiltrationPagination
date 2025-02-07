@@ -102,27 +102,7 @@ else
 }
 
 </table>
-<p>
-    @if (Model.PageViewModel.HasPreviousPage)
-    {
-        <a asp-action="Index"
-           asp-route-page="@(Model.PageViewModel.PageNumber - 1)"           
-           asp-route-artist="@(Model.FilterViewModel.SelectedArtist)"
-           asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
-           asp-route-sortorder="@(Model.SortViewModel.Current)"
-           class="glyphicon glyphicon-chevron-left">
-            Reward
-        </a>
-    }
-    @if (Model.PageViewModel.HasNextPage)
-    {
-        <a asp-action="Index"
-           asp-route-page="@(Model.PageViewModel.PageNumber + 1)"           
-           asp-route-artist="@(Model.FilterViewModel.SelectedArtist)"
-           asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
-           asp-route-sortorder="@(Model.SortViewModel.Current)"
-           class="glyphicon glyphicon-chevron-right">
-            Forward
-        </a>
-    }
-</p>
+<page-link page-model="Model.PageViewModel" page-action="Index"
+           page-url-artist="@(Model.FilterViewModel.SelectedArtist)"
+           page-url-genre="@(Model.FilterViewModel.SelectedGenre)"
+           page-url-sortorder="@(Model.SortViewModel.Current)"></page-link>
