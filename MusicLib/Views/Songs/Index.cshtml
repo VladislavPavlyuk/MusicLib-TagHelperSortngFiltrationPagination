@@ -1,4 +1,5 @@
-﻿@model MusicLib.Models.IndexViewModel 
+﻿@using MusicLib.Models
+@model MusicLib.Models.IndexViewModel 
 
 @{
     ViewData["Title"] = "Index";
@@ -24,34 +25,44 @@
 </form>
 
 <table class="table-condensed" style="width:100%">
-    <tr>
-        <th>
-            <a asp-action="Index" 
-            asp-route-sortOrder="@(Model.SortViewModel.SongTitleSort)"
-            asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
-            asp-route-artist="@(Model.FilterViewModel.SelectedArtist)">Song</a>
-        </th>
-        <th>                
-            <a asp-action="Index" 
-            asp-route-sortOrder="@(Model.SortViewModel.SongReleaseDateSort)"
-            asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
-            asp-route-artist="@(Model.FilterViewModel.SelectedArtist)">Release Date</a>
-        </th>
-        <th>
-            <a asp-action="Index" 
-            asp-route-sortOrder="@(Model.SortViewModel.GenreTitleSort)"
-            asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
-            asp-route-artist="@(Model.FilterViewModel.SelectedArtist)">Genre</a>
-        </th>
-        <th>
-            <a asp-action="Index" 
-            asp-route-sortOrder="@(Model.SortViewModel.ArtistNameSort)"
-            asp-route-genre="@(Model.FilterViewModel.SelectedGenre)"
-            asp-route-artist="@(Model.FilterViewModel.SelectedArtist)">Artist</a>
-        </th>
-        <th>Youtube</th>
-    </tr>
-
+    <thead>
+        <tr>
+            <th>
+                <sort-header 
+                action="Index" 
+                up="@Model.SortViewModel.Up"
+                current="@Model.SortViewModel.Current" 
+                property="@Model.SortViewModel.SongTitleSort">Song
+                </sort-header>
+            </th>
+            <th>                
+                <sort-header 
+                action="Index" 
+                up="@Model.SortViewModel.Up"
+                current="@Model.SortViewModel.Current"
+                property="@Model.SortViewModel.SongReleaseDateSort">Release Date
+                </sort-header>
+            </th>
+            <th>
+                <sort-header 
+                action="Index" 
+                up="@Model.SortViewModel.Up"
+                current="@Model.SortViewModel.Current"
+                property="@Model.SortViewModel.GenreTitleSort">Genre
+                </sort-header>
+            </th>
+            <th>
+                <sort-header 
+                action="Index"
+                up="@Model.SortViewModel.Up"
+                current="@Model.SortViewModel.Current"
+                property="@Model.SortViewModel.ArtistNameSort">Artist
+                </sort-header>
+            </th>
+            <th>Youtube</th>
+        </tr>
+    </thead>
+    <tbody>
 @if (Model.Songs != null)
 {    
     @foreach (var item in Model.Songs)
@@ -100,7 +111,7 @@ else
 {
     <tr>No songs available.</tr>
 }
-
+    </tbody>
 </table>
 <page-link page-model="Model.PageViewModel" page-action="Index"
            page-url-artist="@(Model.FilterViewModel.SelectedArtist)"

@@ -21,9 +21,16 @@ body {
     margin-bottom: 60px;
 }
 
+td, th {
+    padding: 0 13px 0 0;
+}
+
 .glyphicon {
+    border: solid black;
+    border-width: 0 3px 3px 0;
     display: inline-block;
-    padding: 0 5px;
+    padding: 3px;
+    margin: 0 5px;
 }
 
 .glyphicon-chevron-right:after {
@@ -32,4 +39,12 @@ body {
 
 .glyphicon-chevron-left:before {
     content: "\00AB";
+}
+
+.glyphicon-chevron-down {
+    transform: rotate(45deg);
+}
+
+.glyphicon-chevron-up {
+    transform: rotate(-135deg);
 }

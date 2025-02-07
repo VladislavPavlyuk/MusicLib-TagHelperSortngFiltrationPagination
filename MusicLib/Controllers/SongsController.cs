@@ -32,7 +32,7 @@ namespace MusicLib.Controllers
             int genre = 0, 
             int page = 1)
         {
-            int pageSize = 5;
+            int pageSize = 8;
 
             //получаем сортированный список песен
             var songs = await songService.GetSortedItemsAsync(sortOrder.ToString());
